@@ -14,7 +14,7 @@ export default function MainTemplate({ children }) {
     return (
         <>
         <PageContext.Provider value={{messages, setMessages}}>
-            <GoogleOAuthProvider clientId="554114483740-pfvm2dn7808rab8c7qd4c05igvqgbqpp">
+            <GoogleOAuthProvider clientId="379153996664-qnk5a6k814f4a8sqtul668cdtaur5j69.apps.googleusercontent.com">
                 <div className="flex flex-col min-h-screen sm:flex-row">
                     {!isLoginPage && <Leftbar />}
                     <main className={`flex-1${!isLoginPage ? ' p-4 sm:ml-64 sm:mt-16' : ''}`}>
