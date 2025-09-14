@@ -36,17 +36,30 @@ const Login = ({ setLoginType }) => {
             setLoader(false);
         }
     }
-
     const handleGoogleSuccess = async (googleUser) => {
-        try {
-             const user = jwtDecode(googleUser?.credential);
-            document.cookie = `token=${googleUser?.credential}; path=/; max-age=3600`;
-            localStorage.setItem("user", JSON.stringify(user));
-            router.push('/');
-        } catch (error) {
-            setError("Google Sign-In failed. Please try again.");
-        }
-    };
+    try {
+        const user = jwtDecode(googleUser?.credential);
+
+        const response =await apicall.authentication.register({
+            email: user.email,
+            password: user.sub,
+            userName:  (user.name || user.email.split('@')[0])+"google_",
+            mobileNumber: "0000000000",
+            isGoogleUser: true
+        });
+
+
+        document.cookie = `token=${response?.access_Token}; path=/; max-age=3600`;
+        localStorage.setItem("user", JSON.stringify(jwtDecode(response?.access_Token)));
+        router.push('/');
+    } catch (error) {
+        console.error("Google Sign-In failed:", error);
+        setError("Google Sign-In failed. Please try again.");
+    }
+};
+
+
+
 
     return (
         <div className="w-full max-w-xs sm:max-w-sm md:max-w-md bg-white rounded-2xl p-3 sm:p-6 shadow-xl flex flex-col items-center justify-center">
