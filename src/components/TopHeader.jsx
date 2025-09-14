@@ -87,7 +87,7 @@ function TopHeader({user,handleLogoutConfirm}) {
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
                       aria-label="User profile"
                     >
-                     <Link href="/profile" >{userName}</Link>
+                     <Link href="/profile" >{userName.split(" ")[0]}</Link>
                     </button>
                     <button
                       type="button"
