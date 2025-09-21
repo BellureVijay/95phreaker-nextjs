@@ -43,11 +43,14 @@ const MyPosts = () => {
       ) : posts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
           {posts.map((post) => (
-            <div key={post.postId} className="relative p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
-              <p className="text-xl font-bold text-gray-800 mb-2">{post.message}</p>
-              <p className="text-sm text-gray-500 mb-4 italic">{postCreatedtimeAgo(post.createdDate)}</p>
+            <div key={post.postDetail.postId} className="relative p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+              <div className="flex items-center mb-3">
+                <span className="text-sm font-semibold text-gray-600">@{post.userName}</span>
+              </div>
+              <p className="text-xl font-bold text-gray-800 mb-2">{post.postDetail.message}</p>
+              <p className="text-sm text-gray-500 mb-4 italic">{postCreatedtimeAgo(post.postDetail.createdDate)}</p>
               <button
-                onClick={() => handleDeletePost(post.postId)}
+                onClick={() => handleDeletePost(post.postDetail.postId)}
                 className="absolute bottom-4 right-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
               >
                 Delete

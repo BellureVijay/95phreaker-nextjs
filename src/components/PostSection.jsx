@@ -3,7 +3,7 @@ import React, { use, useState } from "react";
 import apicall from "@/agent/ApiCall";
 import { getUser } from "@/utility/user";
 
-const PostSection = ({onCloseCreatePost}) => {
+const PostSection = ({onCloseCreatePost,setPosted}) => {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const user= getUser();
@@ -22,6 +22,7 @@ const PostSection = ({onCloseCreatePost}) => {
       if(onCloseCreatePost){
         onCloseCreatePost();
       }
+      setPosted(prev=>!prev);
     } catch (error) {
       console.error("Error submitting post:", error);
     }

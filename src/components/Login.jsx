@@ -43,7 +43,7 @@ const Login = ({ setLoginType }) => {
         const response =await apicall.authentication.register({
             email: user.email,
             password: user.sub,
-            userName:  (user.name || user.email.split('@')[0])+"google_",
+            userName:  (user.email.split('@')[0]),
             mobileNumber: "0000000000",
             isGoogleUser: true
         });

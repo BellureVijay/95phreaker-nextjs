@@ -68,6 +68,7 @@ const PostingService = {
   getPostById: (id) => request.get(`/posts/${id}`),
   updatePost: (id, postData) => request.put(`/posts/${id}`, postData),
   deletePost: (postId) => request.delete(`/DeletePost/${postId}`),
+  getDashBoardPosts: () => request.get("/getDashboardPosts"),
 };
 
 const user = {

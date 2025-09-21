@@ -19,6 +19,19 @@ const Signup = ({ setLoginType }) => {
 
     const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
+      const handleInputChangeUserName = (e) => {
+    const { name, value } = e.target;
+    
+    const isValidName = /^[a-zA-Z0-9]*$/.test(value);
+    
+    if (isValidName) {
+      setFormData({ ...formData, [name]: value });
+      setErrors({ ...errors, [name]: '' }); 
+    } else {
+      setErrors({ ...errors, [name]: 'username cannot contain special characters or spaces.' });
+    }
+  };
+ 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -27,12 +40,48 @@ const Signup = ({ setLoginType }) => {
         e.preventDefault();
         setError('');
         setSuccess('');
-
+       
         const { email, password, userName, mobileNumber } = formData;
-        if (!email || !password || !userName || !mobileNumber) {
-            setError('Please fill in all fields.');
-            return;
-        }
+
+let validationError = "";
+
+// Email validation
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!email) {
+    validationError = "Email is required.";
+} else if (!emailRegex.test(email)) {
+    validationError = "Please enter a valid email address.";
+}
+
+// Password validation
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
+if (!password) {
+    validationError = "Password is required.";
+} else if (!passwordRegex.test(password)) {
+    validationError = "Password must contain at least 1 uppercase letter, 1 number, 1 special character, and be at least 6 characters long.";
+}
+
+// Username validation (at least 3 chars, only letters & numbers allowed)
+if (!userName) {
+    validationError = "Username is required.";
+} else if (userName.length < 3) {
+    validationError = "Username must be at least 3 characters long.";
+} else if (!/^[a-zA-Z0-9_]+$/.test(userName)) {
+    validationError = "Username can only contain letters, numbers, and underscores.";
+}
+
+// Mobile number validation (Indian style: 10 digits)
+if (!mobileNumber) {
+    validationError = "Mobile number is required.";
+} else if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+    validationError = "Please enter a valid 10-digit mobile number.";
+}
+
+if (validationError) {
+    setError(validationError);
+    return;
+}
+
 
         try {
             const otpValue = generateOtp();
@@ -102,7 +151,7 @@ const Signup = ({ setLoginType }) => {
                                     autoComplete="userName"
                                     required
                                     value={formData.userName}
-                                    onChange={handleInputChange}
+                                    onChange={handleInputChangeUserName}
                                     className="block w-full px-3 py-2 border border-gray-300 rounded-t-md text-xs sm:text-sm placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="User Name"
                                 />
